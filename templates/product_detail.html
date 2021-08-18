@@ -22,12 +22,11 @@
 <h2 class="title">{{product}}</h2>
 
 <div class="mb-3">
-	{{product.stock}}
+	{{product.stock}}{{in_cart}}
 	<var class="price h4">${{product.price}}</var> 
 </div> 
 
 <p>{{product.description}}</p>
-
 
 <hr>
 	<div class="row">
@@ -70,10 +69,15 @@
 	</div> <!-- row.// -->
 	<hr>
 	{% if product.stock > 0 %}
-		<a href="./product-detail.html" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+		{% if in_cart %}
+		<a href="#" class="btn  btn-success disabled"> <span class="text text-capitalize">Add to cart</span> <i class="fas fa-check"></i>  </a>
+		<a href="{% url 'cart' %}" class="btn  btn-outline-info ml-5"> <span class="text text-capitalize">view cart</span> <i class="fas fa-eye"></i>  </a>
+		{% else %}
+		<a href="{% url 'add_cart' product.id %}" class="btn  btn-primary"> <span class="text text-capitalize">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+		{% endif %}
 	{% else %}
-		<a href="./product-detail.html" class="btn  btn-primary disabled"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
-		<h5 class="text-danger">Out Of Stock<h5/>
+		{% comment %} <a href="#" class="btn  btn-primary disabled text-capitalize"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a> {% endcomment %}
+		<h5 class="text-danger text-center  mt-5">Out Of Stock<h5/>
 	{% endif %}
 	</article> <!-- product-info-aside .// -->
 		</main> <!-- col.// -->
